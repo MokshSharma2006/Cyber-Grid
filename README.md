@@ -18,6 +18,20 @@ Cyber-Grid is an advanced, resilient smart power management system built on the 
 
 ---
 
+## 💾 EEPROM Persistent Memory Protection
+
+Cyber-Grid utilizes the Arduino UNO R4's internal EEPROM (Electrically Erasable Programmable Read-Only Memory) to provide non-volatile storage for critical system parameters. This ensures that the grid autonomously recovers its exact configuration after a power outage or hard reboot without requiring user intervention.
+
+**Persistently Stored Variables:**
+* **Financial Tariff Rate (`ADDR_TARIFF`):** Saves the custom ₹/kWh rate set via the dashboard for persistent session cost calculations.
+* **Node Safety Limits (`ADDR_LIMIT1`, `ADDR_LIMIT2`):** Retains the precise maximum wattage overload thresholds defined by the user for Node 1 and Node 2.
+* **Auto-Limit State Toggles (`ADDR_AUTO1`, `ADDR_AUTO2`):** Remembers whether the automatic safety trip mechanism was armed or disarmed for each independent node.
+
+**Operational Flow:**
+Whenever a configuration change is made via the Web UI, the new value is instantly committed to the EEPROM. During the `setup()` boot sequence, Cyber-Grid reads these memory addresses *before* initializing the high-voltage relays. This guarantees the system never powers on in an unprotected or incorrect state. A "WIPE SYSTEM" factory reset button is available in the dashboard settings to format these memory blocks and restore default values.
+
+---
+
 ## 🛠️ Hardware Architecture
 
 ### Components Required
