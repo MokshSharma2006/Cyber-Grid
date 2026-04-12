@@ -23,6 +23,7 @@ Cyber-Grid is an advanced, resilient smart power management system built on the 
 ### Components Required
 * **Microcontroller:** Arduino UNO R4 WiFi
 * **Power Sensor:** PZEM-004T (v3.0 / v4.0)
+* **220V Socket:** 2 3pin Sockets
 * **Relays:** 2-Channel 5V Relay Module (Opto-isolated)
 * **Display:** 0.96" I2C OLED Display (SSD1306)
 * **Voice AI:** Ai-Thinker VC-02 Offline Voice Module
