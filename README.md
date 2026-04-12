@@ -1,4 +1,4 @@
-# Cyber-Grid ⚡ v8.0
+# Cyber-Grid ⚡ 
 
 **Enterprise-Grade Dual-Node Smart Grid Controller with Hybrid Networking & Edge-AI Voice Integration.**
 
