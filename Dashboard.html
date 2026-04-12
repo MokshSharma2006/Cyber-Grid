@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1'>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b14;
+      --surface: rgba(16, 22, 34, 0.7);
+      --border: rgba(0, 242, 255, 0.15);
+      --cyan: #00f2ff;
+      --green: #00ff88;
+      --orange: #ffb84d;
+      --text: #f0f4f8;
+      --text-muted: #8b9bb4;
+      --red: #ff3366;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top, #142036 0%, var(--bg) 100%);
+      color: var(--text);
+      margin: 0;
+      padding: 10px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 0 5px;
+    }
+
+    h2 {
+      font-family: 'Rajdhani', sans-serif;
+      margin: 0;
+      color: #fff;
+      letter-spacing: 2px;
+      font-size: 1.5em;
+      text-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
+    }
+
+    .pill-container {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .net-pill {
+      padding: 4px 8px;
+      border-radius: 15px;
+      font-size: 0.7em;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      border: 1px solid transparent;
+    }
+
+    .clock-pill {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      border-radius: 15px;
+      font-family: 'Rajdhani';
+      color: var(--cyan);
+      font-weight: bold;
+    }
+
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      flex: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .left-pane,
+    .right-pane {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+
+    @media(min-width: 768px) {
+      body {
+        height: 100vh;
+        overflow: hidden;
+        padding: 20px;
+      }
+
+      .app-container {
+        flex-direction: row;
+        min-height: 0;
+      }
+
+      .left-pane,
+      .right-pane {
+        overflow-y: auto;
+        padding-right: 10px;
+      }
+
+      .left-pane {
+        flex: 1.5;
+      }
+
+      .right-pane {
+        flex: 1;
+        max-width: 450px;
+      }
+
+      h2 {
+        font-size: 2em;
+      }
+    }
+
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cyan);
+      border-radius: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .card i {
+      color: var(--cyan);
+      margin-bottom: 2px;
+      font-size: 18px;
+    }
+
+    .val {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5em;
+      color: #fff;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .lbl {
+      font-size: 0.65em;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .money-card {
+      background: linear-gradient(145deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 0, 0, 0.6) 100%);
+      border-color: rgba(0, 255, 136, 0.3);
+    }
+
+    .money-val {
+      color: var(--green);
+      text-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+    }
+
+    .ring-container {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto;
+    }
+
+    .ring-svg {
+      transform: rotate(-90deg);
+      width: 100%;
+      height: 100%;
+    }
+
+    .ring-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.05);
+      stroke-width: 8;
+    }
+
+    .ring-prog {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 8;
+      stroke-dasharray: 283;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear, stroke 0.5s;
+      stroke-linecap: round;
+    }
+
+    .ring-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 100%;
+    }
+
+    .ring-time {
+      font-family: 'Rajdhani';
+      font-size: 1.4em;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .tabs {
+      display: flex;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+      padding: 4px;
+      margin-bottom: 5px;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .tab {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8em;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: 0.3s;
+    }
+
+    .t-active {
+      background: var(--cyan);
+      color: #000;
+      box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+    }
+
+    .panel {
+      display: none;
+      width: 100%;
+      animation: fadeIn 0.3s ease;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .p-active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .node-watts {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2.2em;
+      font-weight: bold;
+      color: var(--cyan);
+      margin: 2px 0;
+      text-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+      line-height: 1;
+    }
+
+    .ctrl-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .m-btn {
+      flex: 1;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.75em;
+      transition: 0.2s;
+    }
+
+    .m-active {
+      background: rgba(0, 242, 255, 0.1);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: inset 0 0 10px rgba(0, 242, 255, 0.1);
+    }
+
+    .input-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+
+    input[type="number"] {
+      background: transparent;
+      border: none;
+      color: var(--cyan);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2em;
+      text-align: right;
+      width: 60px;
+      outline: none;
+      font-weight: 600;
+    }
+
+    input[type="time"] {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      font-family: 'Rajdhani';
+      padding: 4px;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, #00f2ff 0%, #0066ff 100%);
+      border: none;
+      padding: 14px;
+      color: #fff;
+      font-size: 0.9em;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+      letter-spacing: 1px;
+      box-shadow: 0 5px 15px rgba(0, 242, 255, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ff3366 0%, #cc0033 100%);
+      box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class='header-row'>
+    <h2>CYBER-GRID</h2>
+    <div class='pill-container'>
+      <div class='net-pill' id='netBadge'>...</div>
+      <div class='clock-pill' id='sysTime'>--:--</div>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <div class="left-pane">
+      <div class='grid'>
+        <div class='card' style='grid-column: span 2; padding-bottom:5px;'>
+          <div class='lbl'>TOTAL GRID LOAD</div>
+          <div class='val' id='p' style='font-size:2.5em; color:var(--cyan);'>0W</div>
+          <div style="height:50px; width:100%; margin-top:5px;"><canvas id="powerChart"></canvas></div>
+        </div>
+        <div class='card'><i class='material-icons'>electrical_services</i>
+          <div class='val' id='v'>0</div>
+          <div class='lbl'>VOLTS</div>
+        </div>
+        <div class='card'><i class='material-icons'>sync_alt</i>
+          <div class='val' id='c'>0.00</div>
+          <div class='lbl'>AMPS</div>
+        </div>
+        <div class='card'><i class='material-icons'>battery_charging_full</i>
+          <div class='val' id='e'>0.00</div>
+          <div class='lbl'>kWh ENERGY</div>
+        </div>
+        <div class='card money-card'><i class='material-icons' style='color:var(--green);'>payments</i>
+          <div class='val money-val' id='cst'>₹0.00</div>
+          <div class='lbl'>SESSION COST</div>
+        </div>
+
+        <div class='card' style='grid-column: span 2; text-align:left; padding: 15px;'>
+          <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+            <div>
+              <div class='lbl'>SESSION ENERGY</div>
+              <div class='val' style='font-size:1.3em;'><span id='projE'>0.000</span> kWh</div>
+            </div>
+            <div style="text-align:right;">
+              <div class='lbl'>DAILY AVERAGE</div>
+              <div class='val' style='font-size:1.3em;'><span id='projDaily'>0.00</span> kWh</div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+            <div>
+              <div class='lbl'>PROJECTED MONTHLY</div>
+              <div class='val' style='font-size:1.3em; color:var(--orange);'><span id='projMonthly'>0.0</span> kWh</div>
+            </div>
+            <div style="text-align:right;">
+              <div class='lbl'>EST. MONTHLY BILL</div>
+              <div class='val' style='font-size:1.3em; color:var(--orange);'>₹<span id='projBill'>0</span></div>
+            </div>
+          </div>
+          <div
+            style="width:100%; height:6px; background:rgba(255,255,255,0.1); border-radius:3px; margin: 10px 0; position:relative;">
+            <div id="projBar"
+              style="height:100%; background:var(--red); border-radius:3px; width:0%; transition: width 0.5s;"></div>
+            <div style="position:absolute; top:-4px; left:60%; height:14px; width:2px; background:#fff;"></div>
+          </div>
+          <div
+            style="display:flex; justify-content:space-between; font-size:0.55em; color:var(--text-muted); font-weight:bold;">
+            <span>0 kWh</span><span id="projCompare">You: 0 / Avg: 90 kWh</span><span>150 kWh</span>
+          </div>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <div class='input-box' style="margin:0; flex:1; padding:4px 8px;"><span class='lbl'>Tariff(₹)</span><input
+                type='number' id='projTrf' value='8' style="width:40px; font-size:1em;" onchange="calcProj()"></div>
+            <div class='input-box' style="margin:0; flex:1; padding:4px 8px;"><span class='lbl'>Hrs Run</span><input
+                type='number' id='projHrs' value='1' style="width:40px; font-size:1em;" onchange="calcProj()"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-pane">
+      <div class='tabs'>
+        <div id='tab1' class='tab t-active' onclick='switchTab(1)'>NODE 1 (D2)</div>
+        <div id='tab2' class='tab' onclick='switchTab(2)'>NODE 2 (D7)</div>
+        <div id='tab3' class='tab' onclick='switchTab(3)'><i class='material-icons'
+            style='font-size:16px; vertical-align:middle;'>settings</i></div>
+      </div>
+
+      <div id='panel1' class='panel p-active'>
+        <div id="tContainer1" style="display:none; text-align:center; margin-bottom:5px;">
+          <div class="lbl">NODE 1 TIMER</div>
+          <div class="ring-container" style="margin-top:5px;">
+            <svg class="ring-svg" viewBox="0 0 100 100">
+              <circle class="ring-bg" cx="50" cy="50" r="45"></circle>
+              <circle id="tRing1" class="ring-prog" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="ring-text">
+              <div id="tVal1" class="ring-time">0:00</div>
+            </div>
+          </div>
+        </div>
+        <div style='text-align:center;'>
+          <div class='lbl'>INDIVIDUAL DRAW</div>
+          <div id='dp1' class='node-watts'>0W</div>
+        </div>
+        <div class='ctrl-row'><button id='m1_0' class='m-btn' onclick='setA(1, 0)'>MANUAL</button><button id='m1_1'
+            class='m-btn' onclick='setA(1, 1)'>AUTO-LIMIT</button></div>
+        <div id='lim1' class='input-box' style='display:none;'><span class='lbl'>SAFETY LIMIT (W)</span><input
+            type='number' id='l1In' onchange='upL(1, this.value)' placeholder='1000'></div>
+
+        <div class='input-box'>
+          <span class='lbl'>SCHEDULE</span>
+          <div style='display:flex; gap:5px; flex-direction:column; align-items:flex-end;'>
+            <div><small style='color:#8b9bb4; font-size:0.7em;'>ON:</small> <input type='time' id='schOn1'></div>
+            <div><small style='color:#8b9bb4; font-size:0.7em;'>OFF:</small> <input type='time' id='schOff1'></div>
+          </div>
+        </div>
+        <button class='m-btn' onclick='setSch(1)'>SAVE SCHEDULE</button>
+        <button id='b1Btn' class='btn-main' onclick='tog(1)'>INITIATE LINK</button>
+      </div>
+
+      <div id='panel2' class='panel'>
+        <div id="tContainer2" style="display:none; text-align:center; margin-bottom:5px;">
+          <div class="lbl">NODE 2 TIMER</div>
+          <div class="ring-container" style="margin-top:5px;">
+            <svg class="ring-svg" viewBox="0 0 100 100">
+              <circle class="ring-bg" cx="50" cy="50" r="45"></circle>
+              <circle id="tRing2" class="ring-prog" cx="50" cy="50" r="45"></circle>
+            </svg>
+            <div class="ring-text">
+              <div id="tVal2" class="ring-time">0:00</div>
+            </div>
+          </div>
+        </div>
+        <div style='text-align:center;'>
+          <div class='lbl'>INDIVIDUAL DRAW</div>
+          <div id='dp2' class='node-watts'>0W</div>
+        </div>
+        <div class='ctrl-row'><button id='m2_0' class='m-btn' onclick='setA(2, 0)'>MANUAL</button><button id='m2_1'
+            class='m-btn' onclick='setA(2, 1)'>AUTO-LIMIT</button></div>
+        <div id='lim2' class='input-box' style='display:none;'><span class='lbl'>SAFETY LIMIT (W)</span><input
+            type='number' id='l2In' onchange='upL(2, this.value)' placeholder='1000'></div>
+
+        <div class='input-box'>
+          <span class='lbl'>SCHEDULE</span>
+          <div style='display:flex; gap:5px; flex-direction:column; align-items:flex-end;'>
+            <div><small style='color:#8b9bb4; font-size:0.7em;'>ON:</small> <input type='time' id='schOn2'></div>
+            <div><small style='color:#8b9bb4; font-size:0.7em;'>OFF:</small> <input type='time' id='schOff2'></div>
+          </div>
+        </div>
+        <button class='m-btn' onclick='setSch(2)'>SAVE SCHEDULE</button>
+        <button id='b2Btn' class='btn-main' onclick='tog(2)'>INITIATE LINK</button>
+      </div>
+
+      <div id='panel3' class='panel'>
+        <div class='input-box'><span class='lbl'>TARIFF (₹/kWh)</span><input type='number' id='trfIn' step='0.1'
+            onchange='setTariff(this.value)'></div>
+        <div style='text-align:center; padding:15px; color:var(--text-muted); font-size:0.75em; line-height:1.5;'>
+          <i class='material-icons' style='font-size:20px; color:var(--cyan); margin-bottom:5px;'>cloud_upload</i><br>
+          Cloud logging is <span style='color:var(--cyan); font-weight:bold;'>ACTIVE</span>.<br>Data pushed
+          automatically every 1 hour.
+        </div>
+        <button class='btn-main btn-danger'
+          style='margin-top:auto; background: linear-gradient(135deg, #ff0000 0%, #990000 100%); margin-bottom:20px;'
+          onclick='factoryReset()'>
+          <i class='material-icons' style='vertical-align:middle; font-size:16px; margin-right:5px;'>warning</i> WIPE
+          SYSTEM
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let cTab = 1, d = {}, maxT1 = 0, maxT2 = 0;
+    let pData = new Array(30).fill(0);
+    let pLabels = new Array(30).fill('');
+    let chart;
+
+    window.onload = function () {
+      const ctx = document.getElementById('powerChart').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: { labels: pLabels, datasets: [{ data: pData, borderColor: '#00f2ff', borderWidth: 2, tension: 0.4, pointRadius: 0 }] },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false, min: 0 } }, layout: { padding: 0 } }
+      });
+      fetchTelemetry();
+    };
+
+    function switchTab(t) {
+      cTab = t;
+      document.getElementById('tab1').className = (t == 1) ? 'tab t-active' : 'tab';
+      document.getElementById('tab2').className = (t == 2) ? 'tab t-active' : 'tab';
+      document.getElementById('tab3').className = (t == 3) ? 'tab t-active' : 'tab';
+      document.getElementById('panel1').className = (t == 1) ? 'panel p-active' : 'panel';
+      document.getElementById('panel2').className = (t == 2) ? 'panel p-active' : 'panel';
+      document.getElementById('panel3').className = (t == 3) ? 'panel p-active' : 'panel';
+    }
+    function setA(n, state) { fetch(`/A${n}`); }
+    function upL(n, v) { fetch(`/L${n}?v=${v}`); }
+    function setTariff(v) { fetch(`/SET_TARIFF?v=${v}`); }
+
+    function setSch(n) {
+      let onVal = document.getElementById(`schOn${n}`).value; let offVal = document.getElementById(`schOff${n}`).value;
+      if (onVal && offVal) {
+        let onArr = onVal.split(':'); let offArr = offVal.split(':');
+        fetch(`/SCH${n}?onH=${onArr[0]}&onM=${onArr[1]}&offH=${offArr[0]}&offM=${offArr[1]}`); alert(`Node ${n} Schedule Saved!`);
+      } else { alert("Please set both ON and OFF times."); }
+    }
+
+    function tog(n) { if (n == 1) fetch(d.r1 ? "/R1OFF" : "/R1ON"); if (n == 2) fetch(d.r2 ? "/R2OFF" : "/R2ON"); }
+    function factoryReset() { if (confirm("Wipe Memory?")) { fetch('/FACTORY_RESET').then(() => location.reload()); } }
+
+    function updateTimer(n, rem) {
+      let cont = document.getElementById('tContainer' + n);
+      if (rem <= 0) { cont.style.display = 'none'; return; }
+      cont.style.display = 'block';
+
+      if (n == 1 && rem > maxT1) maxT1 = rem;
+      if (n == 2 && rem > maxT2) maxT2 = rem;
+      let maxT = n == 1 ? maxT1 : maxT2;
+
+      let pct = rem / maxT;
+      let ring = document.getElementById('tRing' + n);
+      ring.style.strokeDashoffset = 283 - (283 * pct);
+
+      if (pct > 0.5) ring.style.stroke = 'var(--green)';
+      else if (pct > 0.2) ring.style.stroke = 'var(--orange)';
+      else ring.style.stroke = 'var(--red)';
+
+      let m = Math.floor(rem / 60); let s = rem % 60;
+      document.getElementById('tVal' + n).innerText = m + ':' + (s < 10 ? '0' : '') + s;
+    }
+
+    function calcProj() {
+      let e = window.currentEnergy || 0;
+      let hrs = parseFloat(document.getElementById('projHrs').value) || 1;
+      let trf = parseFloat(document.getElementById('projTrf').value) || 8;
+
+      let hrRate = e / hrs;
+      let daily = hrRate * 24;
+      let monthly = daily * 30;
+      let bill = monthly * trf;
+
+      document.getElementById('projDaily').innerText = daily.toFixed(2);
+      document.getElementById('projMonthly').innerText = monthly.toFixed(1);
+      document.getElementById('projBill').innerText = Math.round(bill);
+
+      let pctAvg = Math.round(((monthly / 90) * 100) - 100);
+      document.getElementById('projCompare').innerText = monthly > 90 ? `Above avg — ${pctAvg}% higher` : `Below avg — ${Math.abs(pctAvg)}% lower`;
+
+      let barW = Math.min((monthly / 150) * 100, 100);
+      let bar = document.getElementById('projBar');
+      bar.style.width = barW + '%';
+      bar.style.background = monthly > 90 ? 'var(--red)' : 'var(--green)';
+    }
+
+    function fetchTelemetry() {
+      fetch('/data')
+        .then(r => r.json())
+        .then(data => {
+          d = data;
+
+          const nBadge = document.getElementById('netBadge');
+          if (d.net === 0) {
+            nBadge.innerText = "🌐 ONLINE";
+            nBadge.style.color = "var(--green)"; nBadge.style.borderColor = "rgba(0, 255, 136, 0.4)"; nBadge.style.background = "rgba(0, 255, 136, 0.1)";
+            document.getElementById('sysTime').innerText = d.clk;
+          } else {
+            nBadge.innerText = "📶 OFFLINE AP";
+            nBadge.style.color = "var(--orange)"; nBadge.style.borderColor = "rgba(255, 184, 77, 0.4)"; nBadge.style.background = "rgba(255, 184, 77, 0.1)";
+            document.getElementById('sysTime').innerText = "LOCAL";
+          }
+
+          document.getElementById('p').innerText = Math.round(d.p) + "W";
+          document.getElementById('v').innerText = Math.round(d.v);
+          document.getElementById('c').innerText = d.c.toFixed(2);
+
+          document.getElementById('e').innerText = d.e.toFixed(3);
+          document.getElementById('cst').innerText = "₹" + d.cst.toFixed(2);
+          if (document.activeElement !== document.getElementById('trfIn')) document.getElementById('trfIn').value = d.trf;
+
+          pData.push(d.p); pData.shift(); chart.update();
+
+          document.getElementById('projE').innerText = d.e.toFixed(3);
+          window.currentEnergy = d.e;
+          calcProj();
+
+          updateTimer(1, d.t1);
+          updateTimer(2, d.t2);
+
+          document.getElementById('dp1').innerText = Math.round(d.dp1) + "W";
+          document.getElementById('m1_0').className = d.a1 ? 'm-btn' : 'm-btn m-active';
+          document.getElementById('m1_1').className = d.a1 ? 'm-btn m-active' : 'm-btn';
+          document.getElementById('lim1').style.display = d.a1 ? 'flex' : 'none';
+          if (document.activeElement !== document.getElementById('l1In')) document.getElementById('l1In').value = d.l1;
+          const b1 = document.getElementById('b1Btn');
+          b1.innerText = d.r1 ? "TERMINATE LINK" : "INITIATE LINK";
+          b1.className = d.r1 ? "btn-main btn-danger" : "btn-main";
+
+          document.getElementById('dp2').innerText = Math.round(d.dp2) + "W";
+          document.getElementById('m2_0').className = d.a2 ? 'm-btn' : 'm-btn m-active';
+          document.getElementById('m2_1').className = d.a2 ? 'm-btn m-active' : 'm-btn';
+          document.getElementById('lim2').style.display = d.a2 ? 'flex' : 'none';
+          if (document.activeElement !== document.getElementById('l2In')) document.getElementById('l2In').value = d.l2;
+          const b2 = document.getElementById('b2Btn');
+          b2.innerText = d.r2 ? "TERMINATE LINK" : "INITIATE LINK";
+          b2.className = d.r2 ? "btn-main btn-danger" : "btn-main";
+
+          setTimeout(fetchTelemetry, 2000);
+        })
+        .catch(err => {
+          setTimeout(fetchTelemetry, 3000);
+        });
+    }
+  </script>
+</body>
+
+</html>
