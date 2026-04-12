@@ -1,4 +1,4 @@
-# Cyber-Grid ⚡ 
+# Cyber-Grid ⚡ v8.0
 
 **Enterprise-Grade Dual-Node Smart Grid Controller with Hybrid Networking & Edge-AI Voice Integration.**
 
@@ -46,6 +46,33 @@ Cyber-Grid is an advanced, resilient smart power management system built on the 
 
 ---
 
+## ☁️ Sinric Pro Cloud Configuration (Alexa/Google Integration)
+
+To enable cloud voice controls, you must link the Arduino to the Sinric Pro platform. 
+
+### Step 1: Create Your Devices
+1. Go to [Sinric.pro](https://sinric.pro/) and create a free account.
+2. Navigate to **Devices** -> **Add Device**.
+3. Create your first device:
+   * **Name:** `Grid Node One` (This is the name Alexa will use).
+   * **Device Type:** `Smart Switch`.
+   * Click **Save**.
+4. Repeat the process to create a second device named `Grid Node Two`.
+
+### Step 2: Get Your Device IDs
+1. On your Sinric Pro Devices dashboard, you will see your two new switches.
+2. Copy the **Device ID** for `Grid Node One` and paste it into the `NODE1_ID` variable in the Arduino code.
+3. Copy the **Device ID** for `Grid Node Two` and paste it into the `NODE2_ID` variable.
+
+### Step 3: Get Your Account Credentials
+1. Navigate to **Credentials** on the left-hand menu in Sinric Pro.
+2. Copy your **App Key** and paste it into the `APP_KEY` variable in the code.
+3. Copy your **App Secret** and paste it into the `APP_SECRET` variable in the code.
+
+*Once the code is uploaded to the Arduino, you can open the Alexa or Google Home app on your phone, link the "Sinric Pro" skill, and your grid nodes will automatically appear!*
+
+---
+
 ## 🧠 Flashing Custom Edge-AI Firmware (VC-02)
 
 Out of the box, the Ai-Thinker VC-02 comes with generic factory firmware. To make it communicate properly with the Cyber-Grid's edge-detection logic and internal pull-up resistors, you must flash it with custom firmware.
@@ -71,9 +98,8 @@ Out of the box, the Ai-Thinker VC-02 comes with generic factory firmware. To mak
 ## 🚀 Installation & Setup
 
 1. **Arduino Libraries:** Ensure `PZEM004Tv40`, `U8g2`, `NTPClient`, and `SinricPro` are installed via the Arduino Library Manager.
-2. **Cloud Configuration:** Create a free account at [Sinric.pro](https://sinric.pro/), create two "Smart Switch" devices, and update the `APP_KEY`, `APP_SECRET`, `NODE1_ID`, and `NODE2_ID` variables in the code.
-3. **Network Configuration:** Update the `ssid` and `pass` variables with your local Wi-Fi credentials.
-4. **Flash the Board:** Upload the master build to your Arduino UNO R4 WiFi.
+2. **Network Configuration:** Update the `ssid` and `pass` variables with your local Wi-Fi credentials in the code.
+3. **Flash the Board:** Upload the master build to your Arduino UNO R4 WiFi.
 
 ## 🌐 Usage & Interface
 Once booted, the OLED screen will display the assigned IP address. Enter this IP into any web browser on the same network to access the Enterprise Dashboard. 
