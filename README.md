@@ -115,3 +115,10 @@ Once booted, the OLED screen will display the assigned IP address. Enter this IP
 * **Offline Failsafe:** If your router fails, connect your device to the `Cyber-Grid-Offline` Wi-Fi network (Password: `12345678`) and navigate to `192.168.4.1`.
 
 ---
+
+---
+
+## Dashboard
+
+<img width="1913" height="608" alt="Screenshot 2026-04-13 021734" src="https://github.com/user-attachments/assets/444e9b39-f44e-4756-aa54-3a3c27ee32ff" />
+
