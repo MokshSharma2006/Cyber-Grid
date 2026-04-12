@@ -61,6 +61,53 @@ Whenever a configuration change is made via the Web UI, the new value is instant
 
 ---
 
+## ⚠️ Mains Connection
+
+### ⚡High-Voltage AC Connection 
+
+
+                 AC MAINS
+              ┌─────────────┐
+              │             │
+         LIVE (L)       NEUTRAL (N)
+            │                │
+            │                ├───────────────┬───────────────┐
+            │                │               │               │
+            │           ┌────▼────┐     ┌────▼────┐     ┌────▼────┐
+            │           │  PZEM   │     │ DEVICE 1│     │ DEVICE 2│
+            │           │   N     │     │ NEUTRAL │     │ NEUTRAL │
+            │           └─────────┘     └─────────┘     └─────────┘
+            │
+            ▼
+      ┌────────────┐
+      │   RELAY 1  │
+      │  COM   NO  │
+      └──┬─────┬───┘
+         │     │
+         │     ▼
+         │   ( CT CLAMP )
+         │       │
+         │       ▼
+         │   DEVICE 1 LIVE
+         │
+         │
+         ▼
+      ┌────────────┐
+      │   RELAY 2  │
+      │  COM   NO  │
+      └──┬─────┬───┘
+         │     │
+         │     ▼
+         │   ( CT CLAMP )
+         │       │
+         │       ▼
+         │   DEVICE 2 LIVE
+         │
+         └──────────────→ PZEM V (Voltage input)
+
+
+---
+
 ## ☁️ Sinric Pro Cloud Configuration (Alexa/Google Integration)
 
 To enable cloud voice controls, you must link the Arduino to the Sinric Pro platform. 
