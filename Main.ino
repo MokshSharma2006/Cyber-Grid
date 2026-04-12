@@ -7,7 +7,7 @@
 #include <U8g2lib.h>
 #include <EEPROM.h>
 
-// Sinric Pro
+// Sinric-Pro
 
 #include <SinricPro.h>
 #include <SinricProSwitch.h>
