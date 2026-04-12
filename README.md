@@ -78,7 +78,7 @@ To enable cloud voice controls, you must link the Arduino to the Sinric Pro plat
 Out of the box, the Ai-Thinker VC-02 comes with generic factory firmware. To make it communicate properly with the Cyber-Grid's edge-detection logic and internal pull-up resistors, you must flash it with custom firmware.
 
 ### Step 1: Build the Firmware on the Portal
-1. Navigate to the [Ai-Thinker Smart Voice Platform](https://smartvoice.ai-thinker.com/) and create a new project for the **VC-02** chip.
+1. Navigate to the [Ai-Thinker Smart Voice Platform](http://voice.ai-thinker.com/#/) and create a new project for the **VC-02** chip.
 2. **Define the Wake Word:** Set your custom activation phrase under Vocabulary (e.g., *"Hello Cyber Grid"*).
 3. **Map the Hardware Pins (Critical):**
    * Go to the **Control Details** tab.
