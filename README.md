@@ -91,7 +91,12 @@ Out of the box, the Ai-Thinker VC-02 comes with generic factory firmware. To mak
 
 *(Note: Ensure the VC-02 module is completely disconnected from the Arduino before flashing.)*
 
+#### Use the UniOneUpdateTool.exe [Application File] to open the tool
+
 <img width="1607" height="240" alt="Screenshot 2026-04-12 214723" src="https://github.com/user-attachments/assets/3350b3f2-f85b-4f29-b2b6-f3e935aa291c" />
+
+#### Select the COM Port of your device and upload the uni_app_release_update.bin file into the software
+*(Note: The Red underlined is the COM Port | The Blue lined is the Browse Option | The Yellow lined is the Upload Option. To Upload the firmware press the RST Button on VC-02 and then hit upload)*
 
 <img width="836" height="421" alt="Screenshot 2026-04-12 215021" src="https://github.com/user-attachments/assets/9fdfe059-f22a-4f25-a9f2-2410ca812589" />
 
