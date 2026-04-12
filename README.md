@@ -116,7 +116,7 @@ Once booted, the OLED screen will display the assigned IP address. Enter this IP
 
 ---
 
----
+
 
 ## Dashboard
 
