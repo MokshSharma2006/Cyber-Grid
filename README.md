@@ -162,8 +162,6 @@ Out of the box, the Ai-Thinker VC-02 comes with generic factory firmware. To mak
 
 <img width="836" height="421" alt="Screenshot 2026-04-12 215021" src="https://github.com/user-attachments/assets/9fdfe059-f22a-4f25-a9f2-2410ca812589" />
 
-
-
 ---
 
 ## 🚀 Installation & Setup
@@ -178,9 +176,7 @@ Once booted, the OLED screen will display the assigned IP address. Enter this IP
 
 ---
 
-
-
-## 🕸️ Enterprise Web Dashboard
+## 🕸️ Web Dashboard
 
 Cyber-Grid features a responsive, mobile-first Web Interface hosted entirely on the Arduino UNO R4. Built from scratch with HTML, CSS, and vanilla JavaScript, the dashboard offers a dark-mode "enterprise" aesthetic with zero reliance on external cloud hosting for the UI.
 
