@@ -180,12 +180,18 @@ Once booted, the OLED screen will display the assigned IP address. Enter this IP
 
 
 
-## 📱 Enterprise Web Dashboard
+## 🕸️ Enterprise Web Dashboard
 
 Cyber-Grid features a responsive, mobile-first Web Interface hosted entirely on the Arduino UNO R4. Built from scratch with HTML, CSS, and vanilla JavaScript, the dashboard offers a dark-mode "enterprise" aesthetic with zero reliance on external cloud hosting for the UI.
 
+### 💻 Desktop View
+
 <img width="1919" height="605" alt="image" src="https://github.com/user-attachments/assets/14710aa5-ceb6-4d59-8e26-d88758785111" />
 
+### 📱 Phone View
+
+<p><img width="300" height="600" alt="image" src="https://github.com/user-attachments/assets/cf0ba5c1-3392-406b-998c-39dcc70ae4dd"/></p>
+<p><img width="300" height="600" alt="image" src="https://github.com/user-attachments/assets/b5c24a21-162f-466c-b43e-b9eae7dccb23"/></p>
 
 ### Dashboard Capabilities:
 * 📈 **Live Data Visualization:** Integrates `Chart.js` for real-time, animated graphing of total grid power draw (Watts).
