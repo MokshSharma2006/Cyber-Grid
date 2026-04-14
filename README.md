@@ -180,9 +180,18 @@ Once booted, the OLED screen will display the assigned IP address. Enter this IP
 
 
 
-## 📺Dashboard
- 
+## 📱 Enterprise Web Dashboard
+
+Cyber-Grid features a responsive, mobile-first Web Interface hosted entirely on the Arduino UNO R4. Built from scratch with HTML, CSS, and vanilla JavaScript, the dashboard offers a dark-mode "enterprise" aesthetic with zero reliance on external cloud hosting for the UI.
 
 <img width="1913" height="608" alt="Screenshot 2026-04-13 021734" src="https://github.com/user-attachments/assets/444e9b39-f44e-4756-aa54-3a3c27ee32ff" />
 
+### Dashboard Capabilities:
+* 📈 **Live Data Visualization:** Integrates `Chart.js` for real-time, animated graphing of total grid power draw (Watts).
+* 💰 **Cost Projections:** Dynamically calculates current session cost and projects daily/monthly estimated bills based on your custom EEPROM-saved Tariff rate.
+* ⏱️ **Visual SVG Timers:** Independent countdown rings for Node 1 and Node 2, allowing you to set auto-shutoff durations with a smooth visual interface.
+* 🚦 **Auto-Limit Overrides:** Configure specific wattage safety limits directly from the UI. If a node exceeds the limit, the dashboard visually alerts you and hardware trips the relay.
+* 📅 **RTC Scheduling:** Input specific ON and OFF times for both nodes, syncing with network time protocols (NTP) to automate your grid.
+* 🍎 **Cross-Platform Rock Solid:** Engineered with strict HTTP headers and timestamped "cache-busting" `fetch()` requests, ensuring immediate button responsiveness and perfect layout rendering on strict operating systems like iOS/Safari.
+ 
 ---
