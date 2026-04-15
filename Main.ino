@@ -67,7 +67,7 @@ float sessionCost = 0.0;
 // Sinric Pro Login
 
 String webhookHost = "maker.ifttt.com";
-String webhookPath = "/trigger/cyber_log/with/key/YOUR_KEY";
+String webhookPath = "/trigger/cyber_log/with/key/YOUR_KEY";      // Optional to enter the key 
 unsigned long lastLogTime = 0;
 const unsigned long logInterval = 3600000;
 
@@ -163,7 +163,7 @@ void setup() {
 
   u8g2.clearBuffer();
   u8g2.setFont(u8g2_font_ncenB08_tr);
-  u8g2.drawStr(0, 15, "CYBER-GRID v8.0");
+  u8g2.drawStr(0, 15, "CYBER-GRID");
   u8g2.drawStr(0, 35, "Enterprise UI Boot...");
   u8g2.sendBuffer();
 
