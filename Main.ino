@@ -34,8 +34,8 @@ unsigned long lastOledUpdate = 0;
 
 const char* ssid = "WIFI_SSID";
 const char* pass = "WIFI_PASSKEY";
-const char* ap_ssid = "Cyber-Grid-Offline"; // AP Fallback Hotspot Name
-const char* ap_pass = "12345678"; // AP Fallback Hotspot Passkey
+const char* ap_ssid = "AP_FALLBACK_SSID"; // AP Fallback Hotspot Name
+const char* ap_pass = "AP_FALLBACK_PASSKEY"; // AP Fallback Hotspot Passkey
 
 WiFiServer server(80);
 ArduinoLEDMatrix matrix;
