@@ -187,7 +187,7 @@ Cyber-Grid features a responsive, mobile-first Web Interface hosted entirely on 
 ### 📱 Phone View
 
 <p><img width="300" height="600" alt="image" src="https://github.com/user-attachments/assets/cf0ba5c1-3392-406b-998c-39dcc70ae4dd"/></p>
-<p><img width="300" height="600" alt="image" src="https://github.com/user-attachments/assets/b5c24a21-162f-466c-b43e-b9eae7dccb23"/></p>
+<p><img width="300" height="200" alt="image" src="https://github.com/user-attachments/assets/b5c24a21-162f-466c-b43e-b9eae7dccb23"/></p>
 
 ### Dashboard Capabilities:
 * 📈 **Live Data Visualization:** Integrates `Chart.js` for real-time, animated graphing of total grid power draw (Watts).
