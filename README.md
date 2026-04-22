@@ -39,7 +39,7 @@ Whenever a configuration change is made via the Web UI, the new value is instant
 * **Power Sensor:** PZEM-004T (v3.0 / v4.0)
 * **220V Socket:** 2-3pin Sockets
 * **Relays:** 2-Channel 5V Relay Module (Opto-isolated)
-* **Display:** 0.96" I2C OLED Display (SSD1306)
+* **Display:** 1.3" I2C OLED Display (SSD1306)
 * **Voice AI:** Ai-Thinker VC-02 Offline Voice Module
 * **Audio:** Active Buzzer (5V)
 
